@@ -3,10 +3,10 @@
 == はじめに ==
 
 libtaiju では，エラーが発生したとき，exception.h で定義されている
-例外 taiju::Exception を投げるようになってます．
-taiju::Exception は std::exception を継承しているため，
-const std::exception & として受け取ることが可能で，
-例外が発生した位置やメッセージは what() で確認できます．
+例外 `taiju::Exception` を投げるようになってます．
+`taiju::Exception` は `std::exception` を継承しているため，
+`const std::exception &` として受け取ることが可能で，
+例外が発生した位置やメッセージは `what()` で確認できます．
 
 ----
 
@@ -32,12 +32,12 @@ public:
 #define TAIJU_THROW(msg) ...
 }}}
 
-TAIJU_THROW() は例外を投げるためのマクロで，
-ファイル名 {{{__FILE__}}}，行番号 {{{__LINE__}}} の後に
+`TAIJU_THROW()` は例外を投げるためのマクロで，
+ファイル名 `__FILE__`，行番号 `__LINE__` の後に
 msg をつなげた文字列を生成し，
-その文字列を持たせた taiju::Exception を例外として投げます．
+その文字列を持たせた `taiju::Exception` を例外として投げます．
 
-文字列を連結するため，msg は文字列定数のみを受け付けます．
+文字列を連結するため，`msg` は文字列定数のみを受け付けます．
 
 {{{
 #ifdef TAIJU_DEBUG
@@ -47,6 +47,6 @@ msg をつなげた文字列を生成し，
 #endif
 }}}
 
-TAIJU_ASSERT() は TAIJU_DEBUG が定義されている場合にのみ
-有効なマクロで，条件 cond が false であれば例外を投げます．
-assert() の代わりとして利用しています．
+`TAIJU_ASSERT()` は `TAIJU_DEBUG` が定義されている場合にのみ
+有効なマクロで，条件 `cond` が `false` であれば例外を投げます．
+`assert()` の代わりとして利用しています．

@@ -32,8 +32,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 bin_PROGRAMS = taiju-build$(EXEEXT) taiju-convert$(EXEEXT) \
-	taiju-find$(EXEEXT) taiju-test$(EXEEXT) \
-	taiju-benchmark$(EXEEXT)
+	taiju-find$(EXEEXT) taiju-benchmark$(EXEEXT)
 subdir = tool
 DIST_COMMON = $(dist_noinst_HEADERS) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in
@@ -58,9 +57,6 @@ taiju_convert_DEPENDENCIES = ../lib/libtaiju.a
 am_taiju_find_OBJECTS = taiju-find.$(OBJEXT)
 taiju_find_OBJECTS = $(am_taiju_find_OBJECTS)
 taiju_find_DEPENDENCIES = ../lib/libtaiju.a
-am_taiju_test_OBJECTS = taiju-test.$(OBJEXT)
-taiju_test_OBJECTS = $(am_taiju_test_OBJECTS)
-taiju_test_DEPENDENCIES = ../lib/libtaiju.a
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -70,11 +66,9 @@ CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
 SOURCES = $(taiju_benchmark_SOURCES) $(taiju_build_SOURCES) \
-	$(taiju_convert_SOURCES) $(taiju_find_SOURCES) \
-	$(taiju_test_SOURCES)
+	$(taiju_convert_SOURCES) $(taiju_find_SOURCES)
 DIST_SOURCES = $(taiju_benchmark_SOURCES) $(taiju_build_SOURCES) \
-	$(taiju_convert_SOURCES) $(taiju_find_SOURCES) \
-	$(taiju_test_SOURCES)
+	$(taiju_convert_SOURCES) $(taiju_find_SOURCES)
 HEADERS = $(dist_noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -176,8 +170,6 @@ taiju_convert_SOURCES = taiju-convert.cc
 taiju_convert_LDADD = ../lib/libtaiju.a
 taiju_find_SOURCES = taiju-find.cc
 taiju_find_LDADD = ../lib/libtaiju.a
-taiju_test_SOURCES = taiju-test.cc
-taiju_test_LDADD = ../lib/libtaiju.a
 taiju_benchmark_SOURCES = taiju-benchmark.cc
 taiju_benchmark_LDADD = ../lib/libtaiju.a
 dist_noinst_HEADERS = time-watch.h
@@ -249,9 +241,6 @@ taiju-convert$(EXEEXT): $(taiju_convert_OBJECTS) $(taiju_convert_DEPENDENCIES)
 taiju-find$(EXEEXT): $(taiju_find_OBJECTS) $(taiju_find_DEPENDENCIES) 
 	@rm -f taiju-find$(EXEEXT)
 	$(CXXLINK) $(taiju_find_OBJECTS) $(taiju_find_LDADD) $(LIBS)
-taiju-test$(EXEEXT): $(taiju_test_OBJECTS) $(taiju_test_DEPENDENCIES) 
-	@rm -f taiju-test$(EXEEXT)
-	$(CXXLINK) $(taiju_test_OBJECTS) $(taiju_test_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -263,7 +252,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/taiju-build.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/taiju-convert.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/taiju-find.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/taiju-test.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

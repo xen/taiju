@@ -1,3 +1,4 @@
  * [BuilderConfig]
  * [Exception]
+ * [FileMap]
  * [IntTypes]

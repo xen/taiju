@@ -1,5 +1,4 @@
 #summary 基本型の説明．
-#labels Phase-Implementation
 
 == はじめに ==
 
@@ -10,11 +9,11 @@ libtaiju で使用する整数の型や定数などは，int-types.h で定義�
 == 整数 ==
 
 32-bit 環境と 64-bit 環境のいずれにおいても 64-bit 整数を用いるため，
-long ではなく long long を用いています．
-long long が 128-bit 整数と解釈される時代が来ると問題になりますが，
+`long` ではなく `long long` を用いています．
+`long long` が 128-bit 整数と解釈される時代が来ると問題になりますが，
 しばらく先になりそうなので大丈夫だと思います．
-他に，Int16 および UInt16 は使っていないのでほとんど影響はありませんが，
-環境によっては int を 32-bit 整数と仮定していることが問題になるかもしれません．
+他に，`Int16` および `UInt16` は使っていないのでほとんど影響はありませんが，
+環境によっては `int` を 32-bit 整数と仮定していることが問題になるかもしれません．
 
 === 符号あり整数 ===
 
@@ -39,14 +38,14 @@ typedef unsigned long long UInt64;
 == 定数 ==
 
 libtaiju を利用するときに使う可能性がある定数は，
-TrieType, IndexType, NodeOrder の 3 つです．
+`TrieType`, `IndexType`, `NodeOrder` の 3 つです．
 ただし，IndexType はビットベクターを単体で
 用いるとき以外には使いません．
 
 === トライの種類 ===
 
-TrieType はトライの種類を表す型です．
-TrieConverterFactory::Create() の引数として使うことで，
+`TrieType` はトライの種類を表す型です．
+`TrieConverterFactory::Create()` の引数として使うことで，
 指定した種類のトライを構築できます．
 
 {{{
@@ -69,8 +68,8 @@ enum TrieType
 
 === ビットベクターの索引種別 ===
 
-BitVectorBuilder::Open() に WITH_SELECT_INDEX を渡すことにより，
-ConstBitVector::select() を高速化できます．
+`BitVectorBuilder::Open()` に `WITH_SELECT_INDEX` を渡すことにより，
+`ConstBitVector::select()` を高速化できます．
 
 {{{
 enum IndexType
@@ -81,11 +80,11 @@ enum IndexType
 };
 }}}
 
- * ONLY_RANK_INDEX
-  * rank() 用の索引のみを付加します．
-  * select() も利用できますが，時間がかかります．
- * WITH_SELECT_INDEX
-  * rank() 用の索引に加えて select() 用の索引を付加します．
+ * `ONLY_RANK_INDEX`
+  * `rank()` 用の索引のみを付加します．
+  * `select()` も利用できますが，時間がかかります．
+ * `WITH_SELECT_INDEX`
+  * `rank()` 用の索引に加えて `select()` 用の索引を付加します．
 
 === ノードの配置順序 ===
 
@@ -96,7 +95,7 @@ enum IndexType
 
 トライの構築において，登録する文字列には個別に重みを指定できます．
 デフォルトではすべての文字列に 1.0 を重みとして与えるため，
-TOTAL_WEIGHT_ORDER を選択することにより，各文字列の出現頻度が同じと
+`TOTAL_WEIGHT_ORDER` を選択することにより，各文字列の出現頻度が同じと
 仮定した場合における，出現頻度が高い順の配置順序になります．
 
 {{{
@@ -112,14 +111,14 @@ enum NodeOrder
 };
 }}}
 
- * ASCENDING_LABEL_ORDER
+ * `ASCENDING_LABEL_ORDER`
   * *ラベル昇順*にノードを配置します．
- * DESCENDING_LABEL_ORDER
+ * `DESCENDING_LABEL_ORDER`
   * *ラベル降順*にノードを配置します．
- * TOTAL_WEIGHT_ORDER
+ * `TOTAL_WEIGHT_ORDER`
   * 各ノードから下方に辿って復元可能な文字列に付与されている*重みの合計が降順*になるようにノードを配置します．
- * MAX_WEIGHT_ORDER
+ * `MAX_WEIGHT_ORDER`
   * 各ノードから下方に辿って復元可能な文字列に付与されている*重みの最大値が降順*になるようにノードを配置します．
- * RANDOM_ORDER
+ * `RANDOM_ORDER`
   * *ランダム順*にノードを配置します．
-  * 並べ替えには，std::random_shuffle() を使用します．乱数生成用の関数オブジェクトは指定しないため，必要であれば std::srand() による初期化をおこなってください．
+  * 並べ替えには，`std::random_shuffle()` を使用します．乱数生成用の関数オブジェクトは指定しないため，必要であれば `std::srand()` による初期化をおこなってください．
