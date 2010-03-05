@@ -2,3 +2,5 @@
  * [Exception]
  * [FileMap]
  * [IntTypes]
+ * [LineReader]
+ * [TempFile]
