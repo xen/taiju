@@ -193,6 +193,16 @@ void benchmark_tries(const taiju::Trie &trie,
 	std::printf("+----------+---------+----------+-------------------+\n");
 
 	benchmark_baseline(keys, rand_keys);
+
+	if (taiju_config.node_order() != taiju::LABEL_ORDER)
+	{
+		std::printf(" %10s", trie.type_name());
+		std::printf(" %7llukb %8sus", trie.size() / 1000, "- ");
+		find_keys(trie, keys);
+		find_keys(trie, rand_keys);
+		std::printf("\n");
+	}
+
 	benchmark_trie(taiju::PODS_TRIE, trie, keys, rand_keys);
 	benchmark_trie(taiju::LOB_TRIE, trie, keys, rand_keys);
 	benchmark_trie(taiju::LOUDS_TRIE, trie, keys, rand_keys);

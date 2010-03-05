@@ -39,6 +39,8 @@ public:
   static const char *help();
 }}}
 
+----
+
 === アクセサ ===
 
 `BuilderConfig` で設定できる内容は，トライの種類 `TrieType`，
