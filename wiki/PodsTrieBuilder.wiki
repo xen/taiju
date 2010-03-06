@@ -1,0 +1,48 @@
+#summary PODS トライの構築．
+
+== はじめに ==
+
+libtaiju では 6 種類のトライをサポートしていますが，
+キー集合から直接構築できるのは PODS トライのみです．
+他のトライについては，キー集合から PODS トライを構築した後，
+PODS トライを変換するという手順が必要になります．
+
+pods-trie-builder.h で定義されているクラス `PodsTrieBuilder` は，
+キー集合から PODS トライを構築するためのクラスです．
+また，trie-builder.h では，`PodsTrieBuilder` の別名として
+`TrieBuilder` を定義しています．
+
+----
+
+== クラスの定義 ==
+
+{{{
+class PodsTrieBuilder
+{
+public:
+  PodsTrieBuilder();
+  ~PodsTrieBuilder();
+
+  TrieType type() const;
+  const char *type_name() const;
+
+  bool empty() const;
+  UInt64 num_keys() const;
+  UInt64 num_nodes() const;
+  UInt64 size() const;
+
+  bool is_open() const;
+  bool finished() const;
+
+  void open(const BuilderConfig &config);
+  void open(NodeOrder node_order = DEFAULT_NODE_ORDER);
+  void close();
+
+  void append(const void *ptr, UInt64 size, double weight = 1.0);
+  void finish();
+
+  void clear();
+  void swap(PodsTrieBuilder *target);
+  void write(Writer writer);
+};
+}}}

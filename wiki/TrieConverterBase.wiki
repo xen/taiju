@@ -1,0 +1,35 @@
+#summary トライ変換のインタフェース．
+
+== はじめに ==
+
+libtaiju では，6 種類のトライに対して，インタフェース `TrieConverterBase`
+を継承する変換用のクラスが個別に用意されています．
+`TrieConverterBase` は trie-converter-base.h で定義されています．
+
+----
+
+== クラスの定義 ==
+
+{{{
+class TrieConverterBase
+{
+public:
+  TrieConverterBase();
+  virtual ~TrieConverterBase();
+
+  virtual TrieType type() const = 0;
+  virtual const char *type_name() const = 0;
+
+  virtual bool empty() const = 0;
+  virtual UInt64 num_keys() const = 0;
+  virtual UInt64 num_nodes() const = 0;
+  virtual UInt64 size() const = 0;
+
+  virtual bool finished() const = 0;
+
+  virtual void convert(const TrieBase &trie) = 0;
+
+  virtual void clear() = 0;
+  virtual void write(Writer writer) = 0;
+};
+}}}
