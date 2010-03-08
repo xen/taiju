@@ -1,4 +1,5 @@
 #summary モジュールの一覧．
+#labels Featured
 
 == はじめに ==
 
