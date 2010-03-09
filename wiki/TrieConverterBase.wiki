@@ -2,19 +2,21 @@
 
 == はじめに ==
 
-libtaiju では，6 種類のトライに対して，インタフェース `TrieConverterBase`
-を継承する変換用のクラスが個別に用意されています．
-`TrieConverterBase` は trie-converter-base.h で定義されています．
+libtaiju では，6 種類のトライに対して，インタフェース
+`taiju::TrieConverterBase` を継承する変換用のクラスが個別に用意されています．
+`taiju::TrieConverterBase` は `taiju/trie-converter-base.h` で定義されています．
 
 ----
 
 == クラスの定義 ==
 
-`TrieConverterBase` はトライを変換するインタフェースを提供するクラスです．
+`taiju::TrieConverterBase` はトライを変換するインタフェースです．
 既存のトライから異なる種類のトライを構築する手順は，
-`TrieConverterFactory` を用いてトライの種類に応じた変換用オブジェクトを生成し，
-そのオブジェクトの `convert()` に既存のトライを渡すだけです．
-構築したトライは，`write()` を用いてファイルなどに出力する必要があります．
+`taiju::TrieConverterFactory` を用いてトライの種類に応じた
+変換用オブジェクトを生成し，
+`taiju::TrieConverterBase::convert()` に既存のトライを渡すだけです．
+構築したトライは，`taiju::TrieConverterBase::write()`
+を用いてファイルなどに出力する必要があります．
 
 {{{
 class TrieConverterBase
@@ -46,8 +48,8 @@ public:
 
 指定されたトライから，異なる種類のトライを構築します．
 同じ種類のトライを構築することも可能ですが，
-`PODS_TRIE` と `TOTAL_WEIGHT_ORDER`，
-もしくは `PODS_TRIE` と `MAX_WEIGHT_ORDER`
+`taiju::PODS_TRIE` と `taiju::TOTAL_WEIGHT_ORDER`，
+もしくは `taiju::PODS_TRIE` と `taiju::MAX_WEIGHT_ORDER`
 の組み合わせ以外では意味がありません．
 
 {{{

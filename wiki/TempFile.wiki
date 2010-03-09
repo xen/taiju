@@ -4,7 +4,7 @@
 
 libtaiju では，大規模なトライを構築するため，
 一時ファイルを利用することでメモリ消費を抑えています．
-temp-file.h で定義されているクラス `TempFile` は，
+`taiju/temp-file.h` で定義されているクラス `taiju::TempFile` は，
 一時ファイルの作成や入出力をサポートします．
 
 ----
@@ -63,7 +63,9 @@ public:
 void open(UInt64 buf_size = 0);
 }}}
 
-一時ファイルを作成し，内部バッファのサイズを設定します．
+一時ファイルを作成し，内部バッファのサイズ `buf_size` を設定します．
+`buf_size` が `0` のときは，
+デフォルト値 `taiju::TEMP_FILE_DEFAULT_BUF_SIZE` を使用します．
 可能であればファイルのパスを無効にし，一時ファイルが残ったり，
 他のプロセスによって操作されたりすることを防ぎます．
 
@@ -117,10 +119,9 @@ UInt64 tell();
 void seek(Int64 offset = 0, int whence = SEEK_SET);
 }}}
 
-`tell()` はファイル位置を返します．
-
-`seek()` はファイル位置を設定します．
-`whence` には，SEEK_SET, SEEK_CUR, SEEK_END を指定できます．
+`taiju::TempFile::tell()` はファイル位置を返します．
+一方，`taiju::TempFile::seek()` はファイル位置を設定します．
+`whence` には，`SEEK_SET`, `SEEK_CUR`, `SEEK_END` を指定できます．
 それぞれの意味は，`std::fseek()` に指定した場合と同様です．
 
 ----
@@ -134,25 +135,25 @@ void seek(Int64 offset = 0, int whence = SEEK_SET);
 
 === Windows の場合 ===
 
-`open()` の手順は以下のようになっています．
+`taiju::TempFile::open()` の実装は以下のようになっています．
 
  # `::_tempnam()` を用いて一時ファイルのパスを生成します．
  # `std::fopen()` あるいは `::fopen_s()` を用いて一時ファイルを作成します．
  # `std::setvbuf()` を用いて内部バッファのサイズを設定します．
 
-`close()` の手順は以下のようになっています．
+`taiju::TempFile::close()` の実装は以下のようになっています．
 
  # `std::fclose()` を用いて一時ファイルを閉じます．
  # `std::remove()` を用いて一時ファイルを削除します．
 
 === Windows 以外の場合 ===
 
-`open()` の手順は以下のようになっています．
+`taiju::TempFile::open()` の実装は以下のようになっています．
 
  # `std::tempfile()` を用いて一時ファイルを作成します．
  # `std::setvbuf()` を用いて内部バッファのサイズを設定します．
 
-`close()` の手順は以下のようになっています．
+`taiju::TempFile::close()` の実装は以下のようになっています．
 
  # `std::fclose()` を用いて一時ファイルを閉じます．
 

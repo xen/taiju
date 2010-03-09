@@ -4,7 +4,7 @@
 
 libtaiju では，大規模なトライをメモリ上に展開することなく
 利用できるように，ファイルに対するメモリマップド I/O
-を補助するクラス `FileMap` を file-map.h で定義しています．
+を補助するクラス `taiju::FileMap` を `taiju/file-map.h` で定義しています．
 ただし，ファイルのフォーマットがメモリマップド I/O
 に最適化されていないため，性能は大幅に低下します．
 
@@ -56,8 +56,7 @@ void open(const char *file_name);
 void close();
 }}}
 
-ファイルをマップしている場合，
-そのマップを解除し，ファイルを閉じます．
+ファイルをマップしている場合，そのマップを解除し，ファイルを閉じます．
 ファイルをマップしていない場合は，何も起きません．
 
 === アドレスの取得 ===
@@ -68,8 +67,8 @@ const T *pointer() const;
 const void *address() const;
 }}}
 
-`address()` はマップされた領域のアドレスを返します．
-`pointer()` はテンプレート引数により指定された型の
+`taiju::FileMap::address()` はマップされた領域のアドレスを返します．
+`taiju::FileMap::pointer()` はテンプレート引数により指定された型の
 ポインタとしてアドレスを返します．
 
 === ファイルサイズの取得 ===
@@ -84,31 +83,31 @@ std::size_t size() const;
 
 == メモリマップド I/O の方法 ==
 
-`FileMap` の実装は，Windows とそれ以外で大きく異なります．
+`taiju::FileMap` の実装は，Windows とそれ以外で大きく異なります．
 具体的には，Windows API を用いるか，`::mmap()` を用いるかという違いです．
 
 === Windows の場合 ===
 
-`open()` の手順は以下のようになっています．
+`taiju::FileMap::open()` の実装は以下のようになっています．
 
  # `::_stat64` を用いてファイルのサイズを調べます．
  # `::CreateFile()` を用いてファイルを開きます．
  # `::CreateFileMapping()` と `::MapViewOfFile()` を用いてファイル全体をメモリ上にマップします．
 
-`close()` の手順は以下のようになっています．
+`taiju::FileMap::close()` の実装は以下のようになっています．
 
- # `::UnmapViewOfFile()` と `CloseHandle()` を用いてファイルのマップを解除します．
+ # `::UnmapViewOfFile()` と `::CloseHandle()` を用いてファイルのマップを解除します．
  # `::CloseHandle()` を用いてファイルを閉じます．
 
 === Windows 以外の場合 ===
 
-`open()` の手順は以下のようになっています．
+`taiju::FileMap::open()` の実装は以下のようになっています．
 
  # `::stat()` を用いてファイルのサイズを調べます．
  # `::open()` を用いてファイルを開きます．
  # `::mmap()` を用いてファイル全体をメモリ上にマップします．
 
-`close()` の手順は以下のようになっています．
+`taiju::FileMap::close()` の実装は以下のようになっています．
 
  # `::munmap()` を用いてファイルのマップを解除します．
  # `::close()` を用いてファイルを閉じます．

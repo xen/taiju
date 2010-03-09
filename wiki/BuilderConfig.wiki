@@ -2,19 +2,18 @@
 
 == はじめに ==
 
-libtaiju を用いるコマンドの開発を補助するため，
---taiju- で始めるコマンド引数を解釈するクラスが
-builder-config.h で定義されています．
+libtaiju を用いるコマンドにおいて，
+トライの種類やノードの配置順序を容易に切り替えられるように，
+--taiju- で始まるコマンドラインオプションを解釈するためのクラス
+`taiju::BuilderConfig` を `taiju/builder-config.h` で定義しています．
 
 ----
 
 == クラスの定義 ==
 
 オブジェクトを作成した時点では，すべてデフォルト値です．
-`BuilderConfig::parse()` に `argc`, `argv` を渡すことで，
---taiju- で始まるオプションのみを取り出せます．
---taiju- で始まる不正なオプションを見つけた場合は，
-例外を投げるようになっています．
+`taiju::BuilderConfig::parse()` に `argc`, `argv` を渡せば，
+--taiju- で始まるオプションのみを取り出すことができます．
 
 {{{
 class BuilderConfig
@@ -43,8 +42,9 @@ public:
 
 === アクセサ ===
 
-`BuilderConfig` で設定できる内容は，トライの種類 `TrieType`，
-ビットベクターの索引種別 `IndexType`，ノードの配置順序 `IndexType` で，
+`taiju::BuilderConfig` で設定できる内容は，トライの種類 `taiju::TrieType`，
+ビットベクターの索引種別 `taiju::IndexType`，
+ノードの配置順序 `taiju::IndexType` で，
 それぞれにアクセスするための関数が定義されています．
 
 {{{
@@ -69,7 +69,7 @@ void parse(int argc, char **argv, int *argc_ptr = NULL);
 }}}
 
 指定可能なオプションは以下の通りです．
-設定の詳細については，IntTypes を参照してください．
+設定の詳細については，[IntTypes] を参照してください．
 
  * Options:
   * --taiju-trie-type arg --- choose one of the following trie types
@@ -101,5 +101,6 @@ void parse(int argc, char **argv, int *argc_ptr = NULL);
 static const char *help();
 }}}
 
-`help()` の返す文字列を `std::cout` や `std::cerr` などに渡せば，
+`taiju::BuilderConfig::help()` の返す文字列を
+`std::cout` や `std::cerr` に渡せば，
 指定できるオプションの一覧が表示されます．
